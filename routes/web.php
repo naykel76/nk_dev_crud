@@ -1,18 +1,30 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Naykel\Gotime\Facades\RouteBuilder;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('pages.home');
+})->name('home');
+
+RouteBuilder::create('nav-main');
+
+/*
+|--------------------------------------------------------------------------
+| Admin Routes
+|--------------------------------------------------------------------------
+|
+*/
+
+// RouteBuilder::create('nav-admin');
+
+// Route::middleware(['role:super|admin', 'auth'])->prefix('admin')->name('admin')->group(function () {
+//     Route::view('/', '/admin.dashboard')->name('');
+// });
