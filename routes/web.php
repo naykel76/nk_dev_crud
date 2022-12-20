@@ -2,13 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Naykel\Gotime\Facades\RouteBuilder;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-*/
+use App\Http\Livewire\{PageCrudTable};
 
 Route::get('/', function () {
     return view('pages.home');
@@ -16,15 +10,5 @@ Route::get('/', function () {
 
 RouteBuilder::create('nav-main');
 
-/*
-|--------------------------------------------------------------------------
-| Admin Routes
-|--------------------------------------------------------------------------
-|
-*/
-
-// RouteBuilder::create('nav-admin');
-
-// Route::middleware(['role:super|admin', 'auth'])->prefix('admin')->name('admin')->group(function () {
-//     Route::view('/', '/admin.dashboard')->name('');
-// });
+// all in one data table, with crud modal
+Route::get('pages-with-table-and-crud', PageCrudTable::class)->name('pages.crud-table');

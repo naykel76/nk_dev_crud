@@ -1,21 +1,12 @@
 {
-  "main": {
-    "links": [
-      {
-        "title":"Admin",
-        "route_name": "admin",
-        "icon": "dashboard",
-        "exclude_route": true
-      }
-    ]
-  },
-  "dev": {
-    "links": [
-      {
-        "title":"Dev",
-        "route_name": "dev",
-        "exclude_route": true
-      }
-    ]
-  }
+	"main": {
+		"links": [
+			{
+				"title": "Site Pages",
+				"route_name": "admin.pages.index",
+				"icon": "document-o",
+				"exclude_route": true
+			}
+		]
+	}
 }

@@ -1,7 +1,9 @@
-<x-gotime-app-layout layout="{{ config('naykel.template') }}">
+<x-gotime-app-layout layout="{{ config('naykel.template') }}" hasContainer class="py-5-3-2">
 
-    <div class="container py-5-3-2">
-        <h1>Home Page</h1>
-    </div>
+    <section>
+        <div class="bx bdr-blue">
+            <livewire:page-crud-table></livewire:page-crud-table>
+        </div>
+    </section>
 
 </x-gotime-app-layout>
