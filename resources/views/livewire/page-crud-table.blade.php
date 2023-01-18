@@ -2,6 +2,8 @@
 
     <h1>Single component with data table, and crud modal</h1>
 
+    <p class="lead">Full-Page data table component where all CRUD actions are performed in a modal without leaving the page or using routes.</p>
+
     <div class="bx danger-light">
         The ckeditor component does not currently work with the single component. I believe this is because the input is not being updated when the modal is called.
     </div>
@@ -30,8 +32,8 @@
                     <td class="w-full">{{ $item->title }}</td>
                     <td>
                         <div class="flex">
-                            <x-gt-button-delete wire:click.prevent="setConfirmAction({{ $item->id }})" class="btn sm pxy-025" iconOnly />
-                            <x-gt-button-edit wire:click.prevent="edit({{ $item->id }})" class="ml-05 btn sm pxy-025" iconOnly />
+                            <x-gt-button-edit wire:click.prevent="edit({{ $item->id }})" class="btn sm pxy-025" iconOnly />
+                            <x-gt-button-delete wire:click.prevent="setActionItemId({{ $item->id }})" class="btn sm pxy-025 ml-05" iconOnly />
                         </div>
                     </td>
                 </tr>
@@ -53,11 +55,14 @@
     <x-gt-modal wire:model="showModal" maxWidth="xl">
 
         <div class="bx-header flex space-between va-c">
+
             <div class="bx-title">
                 {{ isset($this->editing->id) ? 'Edit' : 'Create' }}
                 {{ Str::singular(Str::title(dotLastSegment($routePrefix))) }}
             </div>
-            <x-gotime-icon wire:click="$toggle('showModal')" icon="close" class="close sm" />
+
+            <x-gt-icon-cross wire:click="$toggle('showModal')" class="close sm"  />
+
         </div>
 
         <form wire:submit.prevent="save">
@@ -66,33 +71,17 @@
                 <x-gt-input wire:model.defer="editing.title" for="editing.title" label="Title" req inline />
                 <hr>
                 <x-gt-trix wire:model.lazy="editing.body" for="editing.body" label="Main Body" inline />
-                {{-- <x-gt-ckeditor wire:model.lazy="editing.body" for="editing.body" label="Main Body" inline /> --}}
             </div>
 
         </form>
 
-        <div class="m tar">
+        <div class="tar">
             <button wire:click="save()" class="btn primary">Save</button>
             <button wire:click="cancel()" class="btn">Cancel</button>
         </div>
 
     </x-gt-modal>
 
-    <x-gt-modal.confirmation wire:model="confirmingActionId">
-
-        <x-slot name="title">
-            Delete Item
-        </x-slot>
-
-        <p> Are you sure you want to delete this item? </p>
-
-        <x-slot name="footer">
-            <button wire:click.prevent="$set('confirmingActionId', false)"
-                wire:loading.attr="disabled" class="btn">Nevermind </button>
-            <button wire:click.prevent="delete({{ $confirmingActionId }})"
-                class="btn danger">Delete</button>
-        </x-slot>
-
-    </x-gt-modal.confirmation>
+    <x-gt-modal.delete wire:model="actionItemId" id="{{ $actionItemId }}" />
 
 </div>

@@ -1,14 +1,35 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Naykel\Gotime\Facades\RouteBuilder;
 use App\Http\Livewire\{PageCrudTable};
+use App\Http\Livewire\{PageTable, PageCreateEdit};
 
 Route::get('/', function () {
     return view('pages.home');
 })->name('home');
 
-RouteBuilder::create('nav-main');
+Route::get('/dev', function () {
+    return view('dev');
+})->name('dev');
 
-// all in one data table, with crud modal
-Route::get('pages-with-table-and-crud', PageCrudTable::class)->name('pages.crud-table');
+Route::get('pages-with-table-and-crud-modal', PageCrudTable::class)->name('pages.crud-table');
+
+Route::middleware(['web'])->group(function () {
+
+    Route::prefix('admin')->name('admin')->group(function () {
+        Route::get('pages/{page:slug}/edit', PageCreateEdit::class)->name('.pages.edit');
+        Route::get('pages/create', PageCreateEdit::class)->name('.pages.create');
+        Route::get('pages', PageTable::class)->name('.pages.index');
+    });
+
+});
+
+// /** ---------------------------------------------------------------------------
+//  *  =!= MUST RUN LAST =!= MUST RUN LAST =!= MUST RUN LAST =!= MUST RUN LAST =!=
+//  * ------------------------------------------------------------------------- */
+// ///////////////////////////////////////////////////////////////////////////////
+// Route::get('/{page}', [PageController::class, 'show'])->name('pages.show');
+// ///////////////////////////////////////////////////////////////////////////////
+// /** ---------------------------------------------------------------------------
+//  *  =!= MUST RUN LAST =!= MUST RUN LAST =!= MUST RUN LAST =!= MUST RUN LAST =!=
+//  * ------------------------------------------------------------------------- */

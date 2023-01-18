@@ -16,13 +16,12 @@ return new class extends Migration
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
             $table->string('route_prefix')->nullable();
-            $table->string('slug')->nullable(); // allow duplicates and seperate by route_prefix
             $table->string('title');
-            $table->string('headline')->nullable();
-            $table->longText('description')->nullable();
+            $table->string('slug')->nullable();
             $table->longText('body')->nullable();
-            $table->string('image_name')->nullable();
-            $table->string('thumbnail')->nullable();
+            $table->string('image')->nullable();
+            $table->string('type');
+            $table->string('layout')->nullable();
             $table->integer('sort_order')->nullable()->default(0);
             $table->dateTime('published_at')->nullable();
             $table->timestamps();

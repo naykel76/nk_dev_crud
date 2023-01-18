@@ -6,11 +6,10 @@ use Naykel\Gotime\Traits\WithDataTable;
 use Livewire\WithPagination;
 use Livewire\Component;
 use App\Models\Page;
-use Naykel\Gotime\Traits\WithCrud;
 
-class PageCrudTable extends Component
+class PageTable extends Component
 {
-    use WithPagination, WithDataTable, WithCrud;
+    use WithPagination, WithDataTable;
 
     public string $sortField = 'title';
     public string $searchField = 'title';
@@ -20,22 +19,6 @@ class PageCrudTable extends Component
     public string $routePrefix = 'admin.pages';
     public string $title = 'Site Pages Table';
 
-    public array $initialData = [];
-    public object $editing;
-
-    public function rules()
-    {
-        return [
-            'editing.title' => 'required|min:3',
-            'editing.body' => 'required'
-        ];
-    }
-
-    public function mount()
-    {
-        $this->editing = $this->makeBlankModel($this->initialData);
-    }
-
     public function render()
     {
         sleep(1);
@@ -44,7 +27,7 @@ class PageCrudTable extends Component
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate($this->perPage);
 
-        return view('livewire.page-crud-table')->with(['items' => $query])
+        return view('livewire.page-table')->with(['items' => $query])
             ->layout('layouts.app', ['title' => $this->title]);
     }
 }

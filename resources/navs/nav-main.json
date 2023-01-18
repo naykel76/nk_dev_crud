@@ -2,8 +2,15 @@
     "main": {
         "links": [
             {
-                "title": "Data Table With Crud",
-                "route_name": "pages.crud-table",
+                "name": "table",
+                "route_name": "admin.pages.index",
+                "icon": "document-o",
+                "exclude_route": true
+            },
+            {
+                "name": "table-with-crud",
+                "url": "pages-with-table-and-crud-modal",
+                "icon": "document-o",
                 "exclude_route": true
             }
         ]
@@ -11,7 +18,7 @@
     "footer": {
         "links": [
             {
-                "title": "Home",
+                "name": "Home",
                 "route_name": "home",
                 "exclude_route": true
             }
