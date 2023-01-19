@@ -1,19 +1,11 @@
 <div>
 
-    <h1>Single component with data table, and crud modal</h1>
-
-    <p class="lead">Full-Page data table component where all CRUD actions are performed in a modal without leaving the page or using routes.</p>
-
-    <div class="bx danger-light">
-        The ckeditor component does not currently work with the single component. I believe this is because the input is not being updated when the modal is called.
-    </div>
 
     <div class="flex space-between va-c">
 
         <x-gt-search-sort-toolbar :searchField="$searchField" :searchOptions="$searchOptions" :paginateOptions="$paginateOptions" />
 
-        <button wire:click="create" class="btn primary">
-            <x-gt-icon-plus-round-o class="mr-05" /> New</button>
+        <x-gt-button-create wire:click.prevent="create" withIcon />
 
     </div>
 
@@ -61,7 +53,7 @@
                 {{ Str::singular(Str::title(dotLastSegment($routePrefix))) }}
             </div>
 
-            <x-gt-icon-cross wire:click="$toggle('showModal')" class="close sm"  />
+            <x-gt-icon-cross wire:click="$toggle('showModal')" class="close sm" />
 
         </div>
 

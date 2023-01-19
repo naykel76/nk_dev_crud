@@ -23,20 +23,26 @@ class PageSeeder extends Seeder
 
         $page->sections()->createMany([
             [
-                'id' => 900,
+                'id' => 800,
                 'title' => 'Text Editor',
                 'type' => 'editor',
-                'content' => 'This is a content section one.',
+                'content' => 'This is a rich-text editor page-section.',
             ],
             [
+                'id' => 900,
                 'title' => 'Accordion Section',
                 'type' => 'accordion',
-                'content' => 'This is a content section two.',
+                'content' => json_encode(
+                    [
+                        ['title' => 'Accordion Title 1', 'body' => 'This is the accordion body'],
+                        ['title' => 'Accordion Title 2', 'body' => 'This is the accordion body']
+                    ],
+                ),
             ],
             [
                 'title' => 'Editor Section',
                 'type' => 'textarea',
-                'content' => 'This is a content section three.',
+                'content' => 'This is a rich text editor page-section.',
             ]
         ]);
 
@@ -71,33 +77,5 @@ class PageSeeder extends Seeder
             'body' => '<div>This is a content section.</div>',
             'type' => 'simple',
         ]);
-
-
-        // Page::create([
-        //     'title' => 'FAQ Page Layout',
-        //     'type' => 'faq',
-        // ])->faqs()->createMany([
-        //     [
-        //         'question' => 'How do I navigate the course?',
-        //         'answer' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, ea.'
-        //     ],
-        //     [
-        //         'question' => 'Who much time do I have to complete the course?',
-        //         'answer' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, ea.'
-        //     ]
-        // ]);
-
-        // Page::create([
-        //     'title' => 'Sample Page 2',
-        // ])->faqs()->createMany([
-        //     [
-        //         'question' => 'How do I navigate the course?',
-        //         'answer' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, ea.'
-        //     ],
-        //     [
-        //         'question' => 'Who much time do I have to complete the course?',
-        //         'answer' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, ea.'
-        //     ]
-        // ]);
     }
 }
