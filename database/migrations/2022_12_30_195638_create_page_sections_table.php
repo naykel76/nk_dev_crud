@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('page_sections', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
-            $table->text('content');
+            $table->text('body');
             $table->string('type');
             $table->foreignId('page_id')->on('pages');
             $table->timestamps();

@@ -26,13 +26,13 @@ class PageSeeder extends Seeder
                 'id' => 800,
                 'title' => 'Text Editor',
                 'type' => 'editor',
-                'content' => 'This is a rich-text editor page-section.',
+                'body' => 'This is a rich-text editor page-section.',
             ],
             [
                 'id' => 900,
-                'title' => 'Accordion Section',
+                'title' => 'My First Accordion Section',
                 'type' => 'accordion',
-                'content' => json_encode(
+                'body' => json_encode(
                     [
                         ['title' => 'Accordion Title 1', 'body' => 'This is the accordion body'],
                         ['title' => 'Accordion Title 2', 'body' => 'This is the accordion body']
@@ -42,7 +42,7 @@ class PageSeeder extends Seeder
             [
                 'title' => 'Editor Section',
                 'type' => 'textarea',
-                'content' => 'This is a rich text editor page-section.',
+                'body' => 'This is a rich text editor page-section.',
             ]
         ]);
 
@@ -58,11 +58,11 @@ class PageSeeder extends Seeder
         $page->sections()->createMany([
             [
                 'type' => 'editor',
-                'content' => 'This is a content section one.',
+                'body' => 'This is the body for section one.',
             ],
             [
                 'type' => 'accordion',
-                'content' => 'This is a content section two.',
+                'body' => 'This is the body for section two.',
             ]
         ]);
 
@@ -74,7 +74,7 @@ class PageSeeder extends Seeder
 
         $page = Page::create([
             'title' => 'Normal Page',
-            'body' => '<div>This is a content section.</div>',
+            'body' => '<div>This is the body for section.</div>',
             'type' => 'simple',
         ]);
     }
