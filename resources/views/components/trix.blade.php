@@ -1,0 +1,3 @@
+<div>
+    TRIX EDITOR
+</div>
