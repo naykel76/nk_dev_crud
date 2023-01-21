@@ -12,6 +12,24 @@
                 "url": "pages-with-table-and-crud-modal",
                 "icon": "document-o",
                 "exclude_route": true
+            },
+            {
+                "name": "create-builder",
+                "route_name": "admin.pages.builder.create",
+                "icon": "document-o",
+                "exclude_route": true
+            },
+            {
+                "name": "edit-with-sections",
+                "url": "admin/pages/builder/sample-page-builder-with-sections/edit",
+                "icon": "document-o",
+                "exclude_route": true
+            },
+            {
+                "name": "edit-without-sections",
+                "url": "admin/pages/builder/sample-page-builder-without-sections/edit",
+                "icon": "document-o",
+                "exclude_route": true
             }
         ]
     },

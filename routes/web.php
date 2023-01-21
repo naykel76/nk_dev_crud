@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\{PageCrudTable};
-use App\Http\Livewire\{PageTable, PageCreateEdit};
+use App\Http\Livewire\{PageTable, PageCreateEdit, PageBuilder};
 
 Route::get('/', function () {
     return view('pages.home');
@@ -17,11 +17,13 @@ Route::get('pages-with-table-and-crud-modal', PageCrudTable::class)->name('pages
 Route::middleware(['web'])->group(function () {
 
     Route::prefix('admin')->name('admin')->group(function () {
+        Route::get('pages/builder/{page:slug}/edit', PageBuilder::class)->name('.pages.builder.edit');
+        Route::get('pages/builder/create', PageBuilder::class)->name('.pages.builder.create');
+
         Route::get('pages/{page:slug}/edit', PageCreateEdit::class)->name('.pages.edit');
         Route::get('pages/create', PageCreateEdit::class)->name('.pages.create');
         Route::get('pages', PageTable::class)->name('.pages.index');
     });
-
 });
 
 // /** ---------------------------------------------------------------------------
