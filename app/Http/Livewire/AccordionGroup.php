@@ -10,9 +10,11 @@ class AccordionGroup extends Component
 {
     use WithCrud;
 
-    public array $initialData = ['sort_order' => '0', 'type' => 'accordion', 'page_id' => '427'];
+    public array $initialData = ['sort_order' => '0', 'type' => 'accordion'];
     private static $model = PageSection::class;
     public object $editing;
+
+    protected $listeners = ['edit', 'create'];
 
     protected $rules = [
         'editing.page_id' => 'required',    // for binding
@@ -36,9 +38,24 @@ class AccordionGroup extends Component
 
     protected function beforePersistHook()
     {
-        // on successful validation, update the editing object to set the
-        // accordion body equal to the nested items array
+        // on successful validation, set the editing->body equal to the nested
+        // items array (accordion 'items')
         $this->editing->body = json_encode($this->nestedItems);
+    }
+
+    public function create($pageId): void
+    {
+        $this->initialData['page_id'] = $pageId;
+        $this->addEmptyRow();
+        $this->editing = $this->makeBlankModel();
+        $this->showModal = true;
+    }
+
+    public function edit($id)
+    {
+        $this->editing = self::$model::findOrFail($id);
+        $this->nestedItems = json_decode($this->editing->body);
+        $this->showModal = true;
     }
 
     public function render()

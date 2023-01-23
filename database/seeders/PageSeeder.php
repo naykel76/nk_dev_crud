@@ -34,8 +34,18 @@ class PageSeeder extends Seeder
                 'type' => 'accordion',
                 'body' => json_encode(
                     [
-                        ['title' => 'Accordion Title 1', 'body' => 'This is the accordion body'],
-                        ['title' => 'Accordion Title 2', 'body' => 'This is the accordion body']
+                        ['title' => 'Accordion Title 1', 'body' => 'Accordion 1 body'],
+                        ['title' => 'Accordion Title 2', 'body' => 'Accordion 2 body']
+                    ],
+                ),
+            ],
+            [
+                'title' => 'My Second Accordion Section',
+                'type' => 'accordion',
+                'body' => json_encode(
+                    [
+                        ['title' => 'Accordion Title 3', 'body' => 'Accordion 3 body'],
+                        ['title' => 'Accordion Title 4', 'body' => 'Accordion 4 body'],
                     ],
                 ),
             ],

@@ -1,11 +1,9 @@
 <div>
 
     <div class="my">
-        <button wire:click="create" class="btn flex-col ha-c tac pxy-1">
-            <x-gt-icon-align-left class="mb-05" />Textarea</button>
+        <x-gt-button wire:click.prevent="create" text="Textarea" withIcon="align-left" />
+        <x-gt-button wire:click.prevent="$emitTo('accordion-group', 'create', {{ $pageId }})" text="Accordion" withIcon="expand-o" />
     </div>
-
-    <x-gotime-errors />
 
     <div class="space-y-05">
 
@@ -15,7 +13,16 @@
                 <div class="flex space-between">
                     <h4>{{ $item->title }}</h4>
                     <div>
-                        <x-gt-button-edit wire:click.prevent="edit({{ $item->id }})" iconOnly class="btn sm pxy-025" />
+
+                        @switch($item->type)
+                            @case('accordion')
+                                <x-gt-button-edit wire:click.prevent="$emitTo('accordion-group', 'edit', {{ $item->id }})" iconOnly class="btn sm pxy-025" />
+                                @break
+                            @default
+
+                            <x-gt-button-edit wire:click.prevent="edit({{ $item->id }})" iconOnly class="btn sm pxy-025" />
+                        @endswitch
+
 
                         <x-gt-button-delete wire:click.prevent="setActionItemId({{ $item->id }})" class="btn sm pxy-025 " iconOnly />
                     </div>
@@ -30,6 +37,10 @@
         @endforelse
 
     </div>
+
+    {{-- id and show modal sent when edit button clicked --}}
+    <livewire:accordion-group />
+
 
     <x-gt-modal.delete wire:model="actionItemId" id="{{ $actionItemId }}" />
 
