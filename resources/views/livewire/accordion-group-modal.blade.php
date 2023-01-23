@@ -1,20 +1,14 @@
 <div>
 
-    <x-gt-modal wire:model="showModal" maxWidth="lg">
+    <x-gt-modal.save wire:model="showModal" maxWidth="lg">
 
-        <div class="bx-header blue3 flex space-between va-c">
-            <div class="bx-title mr-2">Accordion Group</div>
-            <div>
-                <x-gt-button-save wire:click.prevent="save" withIcon />
-                <x-gt-button-create wire:click.prevent="addEmptyRow" withIcon text="Accordion Item" />
-            </div>
-        </div>
+        <x-slot name="title"> {{ isset($this->editing->id) ? 'Edit' : 'Create' }} Accordion Group</x-slot>
 
         @error('nestedItems')
             <div class="bx danger">{{ $message }}</div>
         @enderror
 
-        <form wire:submit.prevent>
+        <x-slot name="form">
 
             <x-gt-input wire:model.defer="editing.title" for="editing.title" label="Title (optional)" help-text="Optional H2 title to be display above accordion group" inline />
 
@@ -22,7 +16,7 @@
 
             @forelse($nestedItems as $index => $item)
 
-                <div class="bx light flex space-between gg">
+                <div class="bx light pxy-1 flex space-between gg">
                     <div class="fg1">
                         <x-gt-input wire:model.defer="nestedItems.{{ $index }}.title" for="nestedItems.{{ $index }}.title" label="Item Title" inline />
                         <x-gt-textarea wire:model.defer="nestedItems.{{ $index }}.body" for="nestedItems.{{ $index }}.body" label="Item Body" inline />
@@ -36,8 +30,20 @@
 
             @endforelse
 
-        </form>
+        </x-slot>
 
-    </x-gt-modal>
+        <x-slot name="footer">
+
+            <div class="flex space-between">
+                <x-gt-button-create wire:click.prevent="addEmptyRow" withIcon text="Accordion Item" />
+                <div>
+                    <button wire:click.prevent="save()" class="btn primary">Save</button>
+                    <button wire:click.prevent="cancel()" class="btn">Cancel</button>
+                </div>
+            </div>
+
+        </x-slot>
+
+    </x-gt-modal.save>
 
 </div>

@@ -6,7 +6,7 @@ use Naykel\Gotime\Traits\WithCrud;
 use App\Models\PageSection;
 use Livewire\Component;
 
-class AccordionGroup extends Component
+class AccordionGroupModal extends Component
 {
     use WithCrud;
 
@@ -60,6 +60,6 @@ class AccordionGroup extends Component
 
     public function render()
     {
-        return view('livewire.accordion-group');
+        return view('livewire.accordion-group-modal');
     }
 }

@@ -1,8 +1,9 @@
 <div>
 
     <div class="my">
-        <x-gt-button wire:click.prevent="create" text="Textarea" withIcon="align-left" />
-        <x-gt-button wire:click.prevent="$emitTo('accordion-group', 'create', {{ $pageId }})" text="Accordion" withIcon="expand-o" />
+        <x-gt-button wire:click.prevent="create('textarea')" text="Textarea" withIcon="align-left" />
+        <x-gt-button wire:click.prevent="$emitTo('accordion-group-modal', 'create', {{ $pageId }})" text="Accordion" withIcon="expand-o" />
+        <x-gt-button wire:click.prevent="$emitTo('simple-editor-modal', 'create', {{ $pageId }})" text="Simple Text Editor" withIcon="editor-o" />
     </div>
 
     <div class="space-y-05">
@@ -10,24 +11,31 @@
         @forelse($sections as $index => $item)
 
             <div class="bx pxy-05">
+
                 <div class="flex space-between">
-                    <h4>{{ $item->title }}</h4>
+
+                    <div>
+                        <h4>{{ $item->title }}</h4>
+                        <small class="txt-muted">Section Type: {{ $item->type }}</small>
+                    </div>
+
                     <div>
 
-                        @switch($item->type)
-                            @case('accordion')
-                                <x-gt-button-edit wire:click.prevent="$emitTo('accordion-group', 'edit', {{ $item->id }})" iconOnly class="btn sm pxy-025" />
-                                @break
-                            @default
-
+                        @if($item->type === 'accordion')
+                            <x-gt-button-edit wire:click.prevent="$emitTo('accordion-group-modal', 'edit', {{ $item->id }})" iconOnly class="btn sm pxy-025" />
+                        @elseif($item->type === 'simple-editor')
+                            <x-gt-button-edit wire:click.prevent="$emitTo('simple-editor-modal', 'edit', {{ $item->id }})" iconOnly class="btn sm pxy-025" />
+                        @else
                             <x-gt-button-edit wire:click.prevent="edit({{ $item->id }})" iconOnly class="btn sm pxy-025" />
-                        @endswitch
-
+                        @endif
 
                         <x-gt-button-delete wire:click.prevent="setActionItemId({{ $item->id }})" class="btn sm pxy-025 " iconOnly />
                     </div>
+
                 </div>
+
                 <div class="mt-1">{{ $item->body }}</div>
+
             </div>
 
         @empty
@@ -38,45 +46,51 @@
 
     </div>
 
-    {{-- id and show modal sent when edit button clicked --}}
-    <livewire:accordion-group />
+    <h2>Preview</h2>
 
+    @foreach($sections as $index => $item)
+
+        <div class="bx hover:bg">
+
+            @if($item->type === 'accordion')
+                <x-gt-accordion :data="$item->body" />
+            @elseif($item->type === 'simple-editor')
+                {!! $item->body !!}
+            @else
+                something else?
+            @endif
+
+
+        </div>
+    @endforeach
+
+
+    {{-- these components are listenting for create and edit events --}}
+    <livewire:accordion-group-modal />
+    <livewire:simple-editor-modal />
 
     <x-gt-modal.delete wire:model="actionItemId" id="{{ $actionItemId }}" />
 
-    <x-gt-modal wire:model="showModal" maxWidth="xl">
+    <x-gt-modal.save wire:model="showModal" maxWidth="lg">
 
-        <div class="bx-header flex space-between va-c">
+        <x-slot name="title"> {{ isset($this->editing->id) ? 'Edit' : 'Create' }} Page Section</x-slot>
 
-            <div class="bx-title">
-                {{ isset($this->editing->id) ? 'Edit' : 'Create' }} Page Section
-            </div>
-
-            <x-gt-icon-cross wire:click="$toggle('showModal')" class="close sm" />
-
-        </div>
-
-        <form wire:submit.prevent="save">
-
+        <x-slot name="form">
             <x-gt-input wire:model.defer="editing.title" for="editing.title" label="Title" />
             <x-gt-textarea wire:model.defer="editing.body" for="editing.body" label="Body" />
+        </x-slot>
 
-        </form>
-
-        <div class="tar">
-            <button wire:click.prevent="save()" class="btn primary">Save</button>
-            <button wire:click.prevent="cancel()" class="btn">Cancel</button>
-        </div>
-
-    </x-gt-modal>
+    </x-gt-modal.save>
 
 </div>
 
-@once
-    @push('head')
-        <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@1.3.1/dist/trix.css">
-    @endpush
-    @push('scripts')
-        <script src="https://unpkg.com/trix@1.3.1/dist/trix.js"></script>
-    @endpush
-@endonce
+
+@push('styles')
+
+    <style>
+        .hover\:bg:hover {
+            background-color: rgb(250, 250, 250);
+        }
+
+    </style>
+@endpush

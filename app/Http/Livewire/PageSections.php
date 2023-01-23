@@ -11,7 +11,6 @@ class PageSections extends Component
 {
     use WithCrud;
 
-    public array $initialData = ['type' => 'builder', 'page_id' => null];
     private static $model = PageSection::class;
     public object $editing;
     public int $pageId;
@@ -21,17 +20,22 @@ class PageSections extends Component
     public function rules()
     {
         return [
-            'editing.page_id' => 'required', // for binding
-            'editing.title' => 'required|min:3',
+            'editing.page_id' => 'required',    // for binding
+            'editing.type' => 'required',       // for binding
+            'editing.title' => 'sometimes|min:3',
             'editing.body' => 'required',
-            'editing.type' => 'required', // set in initial data
         ];
     }
 
-    public function mount()
+
+    public function create($type): void
     {
-        $this->initialData['page_id'] = $this->pageId;
-        $this->initialData['type'] = 'textarea';
+        $this->editing = self::$model::make([
+            'page_id' => $this->pageId,
+            'type' => $type
+        ]);
+
+        $this->showModal = true;
     }
 
     public function render()
