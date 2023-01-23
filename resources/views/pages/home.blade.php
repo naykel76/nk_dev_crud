@@ -1,7 +1,14 @@
 <x-gotime-app-layout layout="{{ config('naykel.template') }}" hasContainer class="py-5-3-2">
 
+    <section class="my-3">
 
+        <div class="bx bdr-blue">
 
+            <livewire:accordion-group />
+
+        </div>
+
+    </section>
 
     <section class="my-3">
 

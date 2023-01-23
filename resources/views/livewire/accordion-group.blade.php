@@ -16,18 +16,24 @@
 
     <form wire:submit.prevent>
 
-        <x-gt-input wire:model.defer="editing.title" for="editing.title" label="Title (optional)" />
+        <x-gt-input wire:model.defer="editing.title" for="editing.title" label="Title (optional)" help-text="Optional H2 title to be display above accordion group" inline />
 
+        <hr>
+
+        {{-- page-section 'body' for accordion contents --}}
         @forelse($nestedItems as $index => $item)
 
-            <div class="bx light">
-                <x-gt-input wire:model.defer="nestedItems.{{ $index }}.title" for="nestedItems.{{ $index }}.title" label="Item Title" inline />
-                <x-gt-textarea wire:model.defer="nestedItems.{{ $index }}.body" for="nestedItems.{{ $index }}.body" label="Item Body" inline />
+            <div class="bx light flex space-between gg">
+                <div class="fg1">
+                    <x-gt-input wire:model.defer="nestedItems.{{ $index }}.title" for="nestedItems.{{ $index }}.title" label="Item Title" inline />
+                    <x-gt-textarea wire:model.defer="nestedItems.{{ $index }}.body" for="nestedItems.{{ $index }}.body" label="Item Body" inline />
+                </div>
                 <div class="tar"><button wire:click.prevent="removeItem({{ $index }})" class="btn sm danger">Remove</button></div>
             </div>
+
         @empty
 
-            There are no accordion items!
+            <div class="tac fw-7 py">There are no accordion items!</div>
 
         @endforelse
 

@@ -6,21 +6,21 @@ use Naykel\Gotime\Traits\WithCrud;
 use App\Models\PageSection;
 use Livewire\Component;
 
-class AccordionGroupCreateEdit extends Component
+class AccordionGroup extends Component
 {
     use WithCrud;
 
-    public array $initialData = ['sort_order' => '0', 'type' => 'accordion'];
+    public array $initialData = ['sort_order' => '0', 'type' => 'accordion', 'page_id' => '427'];
     private static $model = PageSection::class;
     public object $editing;
 
     protected $rules = [
+        'editing.page_id' => 'required',    // for binding
+        'editing.type' => 'required',       // for binding
         'editing.title' => 'sometimes',
-        // 'editing.body' => 'required',
         'nestedItems' => 'required',
         'nestedItems.*.title' => 'required',
         'nestedItems.*.body' => 'required',
-        // must have at leat 1
     ];
 
     protected $messages = [
@@ -31,8 +31,7 @@ class AccordionGroupCreateEdit extends Component
 
     public function mount()
     {
-        $this->editing = self::$model::find(900);
-        $this->nestedItems = json_decode($this->editing->body);
+        $this->editing = $this->makeBlankModel();
     }
 
     protected function beforePersistHook()
@@ -42,9 +41,8 @@ class AccordionGroupCreateEdit extends Component
         $this->editing->body = json_encode($this->nestedItems);
     }
 
-
     public function render()
     {
-        return view('livewire.accordion-group-create-edit');
+        return view('livewire.accordion-group');
     }
 }
